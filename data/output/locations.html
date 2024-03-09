@@ -1,0 +1,38 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Map from PY4E</title>
+        <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+        <link href="https://google-developers.appspot.com/maps/documentation/javascript/examples/default.css" rel="stylesheet">
+        <script src="https://unpkg.com/@googlemaps/markerclusterer/dist/index.min.js"></script>
+        <script src="https://maps.googleapis.com/maps/api/js?loading=async"></script>
+        <script src="locations.js"></script>
+        <script>
+            function init() {
+                const map = new google.maps.Map(
+                    document.getElementById('map_canvas'),
+                    {
+                        zoom: 3,
+                        center: new google.maps.LatLng(37.39361,-122.099263),
+                        mapTypeId: google.maps.MapTypeId.ROADMAP
+                    }
+                );
+                let markers = [];
+                for (const data of locations) {
+                    markers.push(new google.maps.Marker({
+                        position: new google.maps.LatLng(data[0], data[1]),
+                        map: map,
+                        title: data[2]
+                    }))
+                }
+                var markerCluster = new markerClusterer.MarkerClusterer(map, markers, {
+                    imagePath: 'http://rawgit.com/googlemaps/js-marker-clusterer/gh-pages/images/m'
+                })
+            }
+        </script>
+    </head>
+    <body onload="init()">
+        <div id="map_canvas" style="height: 500px"></div>
+        <p>Map from <a href="https://www.py4e.com">www.py4e.com</a>.</p>
+    </body>
+</html>
